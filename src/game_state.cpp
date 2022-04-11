@@ -151,56 +151,85 @@ void ChessWrapGame::setupDefaultBoard()
 		for (auto& cell : col)
 			cell.piece.reset();
 	fillDefaultCellColors();
-	placePieceAt<Pawn>({ 0, 0 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 1, 0 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 2, 0 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 3, 0 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 4, 0 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 5, 0 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 6, 0 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 7, 0 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 0, 2 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 1, 2 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 2, 2 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 3, 2 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 4, 2 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 5, 2 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 6, 2 }, PieceColor::eWhite);
-	placePieceAt<Pawn>({ 7, 2 }, PieceColor::eWhite);
-	placePieceAt<Rook>({ 0, 1 }, PieceColor::eWhite);
-	placePieceAt<Rook>({ 7, 1 }, PieceColor::eWhite);
-	placePieceAt<Knight>({ 1, 1 }, PieceColor::eWhite);
-	placePieceAt<Knight>({ 6, 1 }, PieceColor::eWhite);
-	placePieceAt<Bishop>({ 2, 1 }, PieceColor::eWhite);
-	placePieceAt<Bishop>({ 5, 1 }, PieceColor::eWhite);
-	placePieceAt<Queen>({ 3, 1 }, PieceColor::eWhite);
-	placePieceAt<King>({ 4, 1 }, PieceColor::eWhite);
+
+	if (fill_margins_y)
+	{
+		for (int i = 0; i < board_y_margin; ++i)
+		{
+			for (int x = 0; x < board_w; ++x)
+			{
+				placePieceAt<Pawn>({ x, i }, PieceColor::eWhite);
+			}
+		}
+	}
+	if (fill_margins_x)
+	{
+		for (int y = 0; y < 2; ++y)
+		{
+			for (int x = 0; x < board_x_margin; ++x)
+			{
+				placePieceAt<Pawn>({ x, y + board_y_margin }, PieceColor::eWhite);
+				placePieceAt<Pawn>({ board_w - 1 - x, y + board_y_margin }, PieceColor::eWhite);
+			}
+		}
+	}
+
+	placeStartingPieceAt<Pawn>({ 0, 1 }, PieceColor::eWhite);
+	placeStartingPieceAt<Pawn>({ 1, 1 }, PieceColor::eWhite);
+	placeStartingPieceAt<Pawn>({ 2, 1 }, PieceColor::eWhite);
+	placeStartingPieceAt<Pawn>({ 3, 1 }, PieceColor::eWhite);
+	placeStartingPieceAt<Pawn>({ 4, 1 }, PieceColor::eWhite);
+	placeStartingPieceAt<Pawn>({ 5, 1 }, PieceColor::eWhite);
+	placeStartingPieceAt<Pawn>({ 6, 1 }, PieceColor::eWhite);
+	placeStartingPieceAt<Pawn>({ 7, 1 }, PieceColor::eWhite);
+	placeStartingPieceAt<Rook>({ 0, 0 }, PieceColor::eWhite);
+	placeStartingPieceAt<Rook>({ 7, 0 }, PieceColor::eWhite);
+	placeStartingPieceAt<Knight>({ 1, 0 }, PieceColor::eWhite);
+	placeStartingPieceAt<Knight>({ 6, 0 }, PieceColor::eWhite);
+	placeStartingPieceAt<Bishop>({ 2, 0 }, PieceColor::eWhite);
+	placeStartingPieceAt<Bishop>({ 5, 0 }, PieceColor::eWhite);
+	placeStartingPieceAt<Queen>({ 3, 0 }, PieceColor::eWhite);
+	placeStartingPieceAt<King>({ 4, 0 }, PieceColor::eWhite);
 	m_kingWPos = { 4, 1 };
 
-	placePieceAt<Pawn>({ 0, 9 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 1, 9 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 2, 9 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 3, 9 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 4, 9 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 5, 9 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 6, 9 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 7, 9 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 0, 7 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 1, 7 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 2, 7 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 3, 7 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 4, 7 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 5, 7 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 6, 7 }, PieceColor::eBlack);
-	placePieceAt<Pawn>({ 7, 7 }, PieceColor::eBlack);
-	placePieceAt<Rook>({ 0, 8 }, PieceColor::eBlack);
-	placePieceAt<Rook>({ 7, 8 }, PieceColor::eBlack);
-	placePieceAt<Knight>({ 1, 8 }, PieceColor::eBlack);
-	placePieceAt<Knight>({ 6, 8 }, PieceColor::eBlack);
-	placePieceAt<Bishop>({ 2, 8 }, PieceColor::eBlack);
-	placePieceAt<Bishop>({ 5, 8 }, PieceColor::eBlack);
-	placePieceAt<Queen>({ 3, 8 }, PieceColor::eBlack);
-	placePieceAt<King>({ 4, 8 }, PieceColor::eBlack);
+	if (fill_margins_y)
+	{
+		for (int y = board_h - 1 - board_y_margin; y < board_h; ++y)
+		{
+			for (int x = 0; x < board_w; ++x)
+			{
+				placePieceAt<Pawn>({ x, y }, PieceColor::eBlack);
+			}
+		}
+	}
+	if (fill_margins_x)
+	{
+		for (int y = 0; y < 2; ++y)
+		{
+			for (int x = 0; x < board_x_margin; ++x)
+			{
+				placePieceAt<Pawn>({ x, board_h - 1 - board_y_margin - y }, PieceColor::eBlack);
+				placePieceAt<Pawn>({ board_w - 1 - x, board_h - 1 - board_y_margin - y }, PieceColor::eBlack);
+			}
+		}
+	}
+	
+	placeStartingPieceAt<Pawn>({ 0, 6 }, PieceColor::eBlack);
+	placeStartingPieceAt<Pawn>({ 1, 6 }, PieceColor::eBlack);
+	placeStartingPieceAt<Pawn>({ 2, 6 }, PieceColor::eBlack);
+	placeStartingPieceAt<Pawn>({ 3, 6 }, PieceColor::eBlack);
+	placeStartingPieceAt<Pawn>({ 4, 6 }, PieceColor::eBlack);
+	placeStartingPieceAt<Pawn>({ 5, 6 }, PieceColor::eBlack);
+	placeStartingPieceAt<Pawn>({ 6, 6 }, PieceColor::eBlack);
+	placeStartingPieceAt<Pawn>({ 7, 6 }, PieceColor::eBlack);
+	placeStartingPieceAt<Rook>({ 0, 7 }, PieceColor::eBlack);
+	placeStartingPieceAt<Rook>({ 7, 7 }, PieceColor::eBlack);
+	placeStartingPieceAt<Knight>({ 1, 7 }, PieceColor::eBlack);
+	placeStartingPieceAt<Knight>({ 6, 7 }, PieceColor::eBlack);
+	placeStartingPieceAt<Bishop>({ 2, 7 }, PieceColor::eBlack);
+	placeStartingPieceAt<Bishop>({ 5, 7 }, PieceColor::eBlack);
+	placeStartingPieceAt<Queen>({ 3, 7 }, PieceColor::eBlack);
+	placeStartingPieceAt<King>({ 4, 7 }, PieceColor::eBlack);
 	m_kingBPos = { 4, 8 };
 }
 

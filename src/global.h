@@ -215,16 +215,27 @@ private:
 	int m_val;
 };
 
-
+// configurable settings
+inline constexpr bool fill_margins_x = false;
+inline constexpr bool fill_margins_y = true;
 inline constexpr int board_w = 8;
 inline constexpr int board_h = 10;
+inline constexpr int board_y_margin = 1;
+inline constexpr int board_x_margin = 0;
 inline constexpr int window_w = 800;
-inline constexpr int window_h = 750;
-
 inline constexpr int board_px_w = 600;
-inline constexpr int board_px_h = 750;
+// automatically calculated from tweaked settings
+inline constexpr int sidebar_w = window_w - board_px_w;
+inline constexpr int window_h = (board_px_w * board_h) / board_w;
+inline constexpr int board_px_h = window_h;
 inline constexpr int cell_w = board_px_w / board_w;
 inline constexpr int cell_h = board_px_h / board_h;
+
+// need to fit basic pieces
+static_assert(board_w - 2 * board_x_margin >= 8);
+// need to fit basic rows + at least margin of 1
+static_assert(board_h - 2 * board_y_margin >= 4);
+static_assert(board_y_margin > 0);
 
 //template <int W, int H>
 //using Position = std::pair<IntModN<W>, IntModN<H>>;

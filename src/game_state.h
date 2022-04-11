@@ -71,6 +71,24 @@ private:
 		m_board[pos.first][pos.second].piece = std::make_shared<PieceType>(m_board, color, pos, m_turnCount);
 	}
 
+	template <typename PieceType>
+	std::enable_if_t<std::is_base_of_v<Piece, PieceType>, void>
+		placeStartingPieceAt(BoardPos pos, PieceColor color)
+	{
+		if (color == PieceColor::eWhite)
+		{
+			BoardPos dst = { pos.first + board_x_margin, pos.second + board_y_margin };
+			m_board[dst.first][dst.second].piece = 
+				std::make_shared<PieceType>(m_board, color, dst, m_turnCount);
+		}
+		else
+		{
+			BoardPos dst = { pos.first + board_x_margin, board_h - 1 - (7 - pos.second + board_y_margin) };
+			m_board[dst.first][dst.second].piece =
+				std::make_shared<PieceType>(m_board, color, dst, m_turnCount);
+		}
+	}
+
 	static inline constexpr ColorRGB white_cell_color = { UINT8_MAX, UINT8_MAX, UINT8_MAX };
 	static inline constexpr ColorRGB black_cell_color = { 0, 0, 0 };
 	static inline constexpr ColorRGB piece_selected_color = { 100, 100, 200 };
@@ -78,11 +96,11 @@ private:
 	static inline constexpr ColorRGB reset_button_color = { 3 * (UINT8_MAX / 4), 3 * (UINT8_MAX / 4), 3 * (UINT8_MAX / 4) };
 	static inline constexpr ColorRGB reset_pressed_color = { 5 * (UINT8_MAX / 8), 5 * (UINT8_MAX / 8), 5 * (UINT8_MAX / 8) };
 
-	static inline constexpr int turn_text_w = window_w - board_px_w;
+	static inline constexpr int turn_text_w = sidebar_w;
 	static inline constexpr int turn_text_h = 50;
-	static inline constexpr int win_text_w = window_w - board_px_w;
+	static inline constexpr int win_text_w = sidebar_w;
 	static inline constexpr int win_text_h = 50;
-	static inline constexpr int reset_button_w = window_w - board_px_w;
+	static inline constexpr int reset_button_w = sidebar_w;
 	static inline constexpr int reset_button_h = 150;
 	static inline constexpr int reset_button_x = board_px_w;
 	static inline constexpr int reset_button_y = board_px_h - reset_button_h;
